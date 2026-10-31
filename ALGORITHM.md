@@ -8,25 +8,22 @@ It's called *naive* because it pretends every word is independent of the others.
 
 ## Big picture
 
+> **Colour key:** 🟩 green = ham (legitimate) · 🟥 red = spam · ⬜ grey = neutral steps shared by both. Colour is only used where it tells you which class something belongs to.
+
 ```mermaid
 flowchart LR
-    A[Training emails<br/>ham + spam folders] --> B[Training:<br/>count words per class]
-    B --> C[(Model:<br/>class priors +<br/>word probabilities)]
-    D[New email] --> E[Scoring:<br/>score for ham,<br/>score for spam]
-    C --> E
+    HT[Ham training emails] --> HM[(Ham model:<br/>prior + word probabilities)]
+    ST[Spam training emails] --> SM[(Spam model:<br/>prior + word probabilities)]
+    N[New email] --> E[Score the email<br/>against each model]
+    HM --> E
+    SM --> E
     E --> F{Higher score?}
     F -->|ham| G[Label: HAM]
     F -->|spam| H[Label: SPAM]
-    class A,D data
-    class B,E step
-    class C model
-    class F decision
-    class G ham
-    class H spam
-    classDef data fill:#dbeafe,stroke:#2563eb,color:#1e3a8a
-    classDef step fill:#fef9c3,stroke:#ca8a04,color:#713f12
-    classDef model fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
-    classDef decision fill:#ffedd5,stroke:#ea580c,color:#7c2d12
+    class N,E,F plain
+    class HT,HM,G ham
+    class ST,SM,H spam
+    classDef plain fill:#f3f4f6,stroke:#6b7280,color:#111827
     classDef ham fill:#dcfce7,stroke:#16a34a,color:#14532d
     classDef spam fill:#fee2e2,stroke:#dc2626,color:#7f1d1d
 ```
@@ -40,13 +37,8 @@ flowchart LR
     L --> O[Drop 1-letter tokens]
     O --> W[Optionally drop stop words<br/>like 'the', 'and', 'of']
     W --> R["['win', 'free', 'money', 'now!']"]
-    class T data
-    class S,L,O,W step
-    class R model
-    classDef data fill:#dbeafe,stroke:#2563eb,color:#1e3a8a
-    classDef step fill:#fef9c3,stroke:#ca8a04,color:#713f12
-    classDef model fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
-    classDef decision fill:#ffedd5,stroke:#ea580c,color:#7c2d12
+    class T,S,L,O,W,R plain
+    classDef plain fill:#f3f4f6,stroke:#6b7280,color:#111827
     classDef ham fill:#dcfce7,stroke:#16a34a,color:#14532d
     classDef spam fill:#fee2e2,stroke:#dc2626,color:#7f1d1d
 ```
@@ -91,16 +83,10 @@ flowchart TD
     E --> F
     F -->|yes| G[SPAM]
     F -->|no| H[HAM]
-    class A data
-    class B,D spam
-    class C,E ham
-    class F decision
-    class G spam
-    class H ham
-    classDef data fill:#dbeafe,stroke:#2563eb,color:#1e3a8a
-    classDef step fill:#fef9c3,stroke:#ca8a04,color:#713f12
-    classDef model fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
-    classDef decision fill:#ffedd5,stroke:#ea580c,color:#7c2d12
+    class A,F plain
+    class B,D,G spam
+    class C,E,H ham
+    classDef plain fill:#f3f4f6,stroke:#6b7280,color:#111827
     classDef ham fill:#dcfce7,stroke:#16a34a,color:#14532d
     classDef spam fill:#fee2e2,stroke:#dc2626,color:#7f1d1d
 ```
