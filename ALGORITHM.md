@@ -17,6 +17,18 @@ flowchart LR
     E --> F{Higher score?}
     F -->|ham| G[Label: HAM]
     F -->|spam| H[Label: SPAM]
+    class A,D data
+    class B,E step
+    class C model
+    class F decision
+    class G ham
+    class H spam
+    classDef data fill:#dbeafe,stroke:#2563eb,color:#1e3a8a
+    classDef step fill:#fef9c3,stroke:#ca8a04,color:#713f12
+    classDef model fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    classDef decision fill:#ffedd5,stroke:#ea580c,color:#7c2d12
+    classDef ham fill:#dcfce7,stroke:#16a34a,color:#14532d
+    classDef spam fill:#fee2e2,stroke:#dc2626,color:#7f1d1d
 ```
 
 ## Step 1 – Clean the text
@@ -28,6 +40,15 @@ flowchart LR
     L --> O[Drop 1-letter tokens]
     O --> W[Optionally drop stop words<br/>like 'the', 'and', 'of']
     W --> R["['win', 'free', 'money', 'now!']"]
+    class T data
+    class S,L,O,W step
+    class R model
+    classDef data fill:#dbeafe,stroke:#2563eb,color:#1e3a8a
+    classDef step fill:#fef9c3,stroke:#ca8a04,color:#713f12
+    classDef model fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    classDef decision fill:#ffedd5,stroke:#ea580c,color:#7c2d12
+    classDef ham fill:#dcfce7,stroke:#16a34a,color:#14532d
+    classDef spam fill:#fee2e2,stroke:#dc2626,color:#7f1d1d
 ```
 
 Stop words are very common words that say little about spam vs. ham. The program runs twice: once removing them, once keeping them, so you can compare.
@@ -70,6 +91,18 @@ flowchart TD
     E --> F
     F -->|yes| G[SPAM]
     F -->|no| H[HAM]
+    class A data
+    class B,D spam
+    class C,E ham
+    class F decision
+    class G spam
+    class H ham
+    classDef data fill:#dbeafe,stroke:#2563eb,color:#1e3a8a
+    classDef step fill:#fef9c3,stroke:#ca8a04,color:#713f12
+    classDef model fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    classDef decision fill:#ffedd5,stroke:#ea580c,color:#7c2d12
+    classDef ham fill:#dcfce7,stroke:#16a34a,color:#14532d
+    classDef spam fill:#fee2e2,stroke:#dc2626,color:#7f1d1d
 ```
 
 **Why logs?** Multiplying hundreds of tiny probabilities (like 0.0003 × 0.0001 × …) gets so small a computer rounds it to zero. Adding their logarithms gives the same ranking with no precision problem. The code uses base-10 logs.
